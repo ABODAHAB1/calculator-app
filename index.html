@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>آلة حاسبة متقدمة</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121722;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .calculator {
+      background: #1c2230;
+      padding: 20px;
+      border-radius: 12px;
+      width: 280px;
+    }
+    .display {
+      background: #0c1016;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      text-align: right;
+    }
+    #exp {
+      font-size: 14px;
+      color: #aaa;
+      min-height: 20px;
+    }
+    #out {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    button {
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #2a3346;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #3aa0ff;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display">
+      <div id="exp"></div>
+      <div id="out">0</div>
+    </div>
+    <div class="buttons">
+      <button data-val="7">7</button>
+      <button data-val="8">8</button>
+      <button data-val="9">9</button>
+      <button data-val="/">÷</button>
+
+      <button data-val="4">4</button>
+      <button data-val="5">5</button>
+      <button data-val="6">6</button>
+      <button data-val="*">×</button>
+
+      <button data-val="1">1</button>
+      <button data-val="2">2</button>
+      <button data-val="3">3</button>
+      <button data-val="-">−</button>
+
+      <button data-val="0">0</button>
+      <button data-val=".">.</button>
+      <button id="equals">=</button>
+      <button data-val="+">+</button>
+
+      <button id="sqrt">√</button>
+      <button id="square">x²</button>
+      <button id="inv">1/x</button>
+      <button id="clear">مسح</button>
+    </div>
+  </div>
+
+  <script>
+    const expEl = document.getElementById('exp');
+    const outEl = document.getElementById('out');
+    let expression = '';
+
+    function updateDisplay() {
+      expEl.textContent = expression;
+    }
+    function setOutput(val) {
+      outEl.textContent = val;
+    }
+
+    document.querySelectorAll('button[data-val]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        expression += btn.getAttribute('data-val');
+        updateDisplay();
+        try {
+          setOutput(eval(expression));
+        } catch {
+          setOutput('');
+        }
+      });
+    });
+
+    document.getElementById('equals').addEventListener('click', () => {
+      try {
+        const result = eval(expression);
+        setOutput(result);
+        expression = result.toString();
+        updateDisplay();
+      } catch {
+        setOutput('خطأ');
+      }
+    });
+
+    document.getElementById('clear').addEventListener('click', () => {
+      expression = '';
+      setOutput(0);
+      updateDisplay();
+    });
+
+    document.getElementById('sqrt').addEventListener('click', () => {
+      const val = parseFloat(outEl.textContent);
+      setOutput(Math.sqrt(val));
+      expression = Math.sqrt(val).toString();
+      updateDisplay();
+    });
+
+    document.getElementById('square').addEventListener('click', () => {
+      const val = parseFloat(outEl.textContent);
+      setOutput(val * val);
+      expression = (val * val).toString();
+      updateDisplay();
+    });
+
+    document.getElementById('inv').addEventListener('click', () => {
+      const val = parseFloat(outEl.textContent);
+      setOutput(1 / val);
+      expression = (1 / val).toString();
+      updateDisplay();
+    });
+  </script>
+</body>
+</html>
+
