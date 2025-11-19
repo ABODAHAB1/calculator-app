@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>آلة حاسبة متقدمة</title>
+  <!-- مهم جدًا عشان الموبايل -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,37 +14,39 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
     .calculator {
       background: #1c2230;
       padding: 20px;
       border-radius: 12px;
-      width: 280px;
+      width: 90%;          /* ياخد معظم عرض الشاشة */
+      max-width: 400px;    /* أقصى عرض على الكمبيوتر */
     }
     .display {
       background: #0c1016;
-      padding: 10px;
+      padding: 15px;
       border-radius: 8px;
       margin-bottom: 12px;
       text-align: right;
     }
     #exp {
-      font-size: 14px;
+      font-size: 16px;
       color: #aaa;
-      min-height: 20px;
+      min-height: 24px;
     }
     #out {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: bold;
     }
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 10px;
     }
     button {
-      padding: 12px;
-      font-size: 16px;
+      padding: 16px;
+      font-size: 18px;
       border: none;
       border-radius: 6px;
       background: #2a3346;
@@ -132,23 +136,29 @@
 
     document.getElementById('sqrt').addEventListener('click', () => {
       const val = parseFloat(outEl.textContent);
-      setOutput(Math.sqrt(val));
-      expression = Math.sqrt(val).toString();
-      updateDisplay();
+      if (!isNaN(val)) {
+        setOutput(Math.sqrt(val));
+        expression = Math.sqrt(val).toString();
+        updateDisplay();
+      }
     });
 
     document.getElementById('square').addEventListener('click', () => {
       const val = parseFloat(outEl.textContent);
-      setOutput(val * val);
-      expression = (val * val).toString();
-      updateDisplay();
+      if (!isNaN(val)) {
+        setOutput(val * val);
+        expression = (val * val).toString();
+        updateDisplay();
+      }
     });
 
     document.getElementById('inv').addEventListener('click', () => {
       const val = parseFloat(outEl.textContent);
-      setOutput(1 / val);
-      expression = (1 / val).toString();
-      updateDisplay();
+      if (!isNaN(val) && val !== 0) {
+        setOutput(1 / val);
+        expression = (1 / val).toString();
+        updateDisplay();
+      }
     });
   </script>
 </body>
